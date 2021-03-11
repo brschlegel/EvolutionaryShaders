@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <time.h>
+#include <stdlib.h>
 
 using namespace std;
 enum Operators
@@ -24,7 +26,12 @@ public:
     static GlobalVars* getInstance();
 
     map<string, Operators> operatorMap;
+    vector<string> variables;
     int GetId(string s);
+    bool isVariable(string info);
+    Operators getRandomOperator();
+    string getStringOfOperator(Operators op);
+    string getRandomVar();
   
 private:
     

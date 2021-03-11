@@ -38,6 +38,12 @@ int GlobalVars::GetId(string s)
 
 GlobalVars::GlobalVars()
 {
+    srand(time(NULL));
+
+    variables.push_back("X");
+    variables.push_back("Y");
+    variables.push_back("TIME");
+
     operatorMap["+"] = Operators::Plus;
     operatorMap["-"] = Operators::Minus;
     operatorMap["/"] = Operators::Divide;
@@ -56,4 +62,33 @@ GlobalVars::GlobalVars()
     type2.push_back(Operators::CosMultiply);
     type2.push_back(Operators::SinPlus);
     type2.push_back(Operators::SinMultiply);
+}
+
+bool GlobalVars::isVariable(string info)
+{
+    return find(variables.begin(), variables.end(), info) != variables.end();
+}
+
+Operators GlobalVars::getRandomOperator()
+{
+    map<string,Operators>::iterator itr = operatorMap.begin();
+    advance(itr, rand() % operatorMap.size());
+    return itr->second;
+}
+
+string GlobalVars::getStringOfOperator(Operators op)
+{
+    for(map<string, Operators>::iterator it = operatorMap.begin(); it != operatorMap.end(); ++it)
+    {
+        if(it->second == op)
+        {
+            return it->first;
+        }
+    }
+    return " ";
+}
+
+string GlobalVars::getRandomVar()
+{
+    return variables[rand()%variables.size()];
 }

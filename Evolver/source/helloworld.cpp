@@ -23,4 +23,6 @@ int main()
     Tree t = Tree(root);
     cout<<"tree comes out to: " << t.solve(10,20,1) << endl;
     cout<<"Tree tostring is: " <<t.toString() << endl;
+    t.naiveMutate();
+    cout<<"Tree tostring post-mutate is: " <<t.toString() << endl;
 }
