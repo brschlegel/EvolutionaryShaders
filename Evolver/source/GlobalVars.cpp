@@ -40,8 +40,11 @@ GlobalVars::GlobalVars()
 {
     srand(time(NULL));
 
-    variables.push_back("X");
-    variables.push_back("Y");
+    randomNumMax = 10;
+    randomNumMin = 1;
+
+    variables.push_back("UV.x");
+    variables.push_back("UV.y");
     variables.push_back("TIME");
 
     operatorMap["+"] = Operators::Plus;

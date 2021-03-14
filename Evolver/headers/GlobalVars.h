@@ -32,6 +32,8 @@ public:
     Operators getRandomOperator();
     string getStringOfOperator(Operators op);
     string getRandomVar();
+    int randomNumMin;
+    int randomNumMax;
   
 private:
     

@@ -9,10 +9,16 @@
 
 using namespace std;
 
+
 class Tree{
 public:
     Node* root;
     Tree(Node* root);
+    Tree();
+    Tree(const Tree& t);
+    void BuildRandTree(Node* node, int depth);
+    void BuildCopyTree(Node* root, Node* copyNode );
+    
     float solve(float X, float Y, float TIME);
     float solveR(Node* node, float X, float Y, float TIME);
     string toString();
@@ -30,5 +36,7 @@ public:
     vector<Node*> getVarLeavesR(Node* node);
     vector<Node*> getNumLeavesR(Node* Node);
     vector<Node*> getOperatorNodes(Node* node);
+ 
+ 
 
 };
