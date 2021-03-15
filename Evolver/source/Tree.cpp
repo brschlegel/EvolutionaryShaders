@@ -72,6 +72,27 @@ void Tree::BuildRandTree(Node *node, int depth)
         }
     }
 }
+
+void Tree::unload()
+{
+    unloadR(root);
+}
+
+void Tree::unloadR(Node* node)
+{
+    if(node->left != NULL)
+    {
+        unloadR(node->left);
+    }
+
+    if(node->right != NULL)
+    {
+        unloadR(node->right);
+    }
+
+    delete node;
+
+}
 float Tree::solve(float X, float Y, float TIME)
 {
     return solveR(root, X, Y, TIME);

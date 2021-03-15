@@ -1,3 +1,4 @@
+#pragma once
 #include <string>
 #include "../headers/Node.h"
 #include "../headers/GlobalVars.h"
@@ -18,6 +19,8 @@ public:
     Tree(const Tree& t);
     void BuildRandTree(Node* node, int depth);
     void BuildCopyTree(Node* root, Node* copyNode );
+    void unload();
+    void unloadR(Node* node);
     
     float solve(float X, float Y, float TIME);
     float solveR(Node* node, float X, float Y, float TIME);
