@@ -1,0 +1,30 @@
+\documentclass{article}
+
+\title{Investigating the use of aesthetic measures over time with unsupervised evolutionary art}
+\author{Ben Schlegel}
+\date{\today}
+
+\begin{document}
+\begin{titlepage}
+    \maketitle
+\end{titlepage}
+\begin{abstract}
+    We present a study of several aesthetic measures over time in unsupervised evolutionary art. We evolve shaders without any human evaluation, using aesthetic scores as our fitness function. We take samples of the shader at several timestamps, calculate the score, and sum all the scores up to do fitness evaluation
+\end{abstract}
+
+\section*{Introduction}
+Evolutionary art is a field investigating the use of evolutionary computing techniques to produce aesthetically pleasing images. Traditionally this involves the assistance of human judges, determining which phenotypes live on. This leads to a fitness bottleneck,
+and also leads to subjectivity. Using aesthetic measures gives us numbers to look at and run statistics on, and also does not rely on humans to function. This means the production and evolution of our genotypes can be speed up massively. We have implemented three aesthetic measures to evolve our images with. The shaders will be placed on a blank canvas, and the images produced will be evaluated using a single aesthetic measure at several time steps. The sum of the scores at each time step will then be used to give a fitness score to the shader. These fitness scores will be used to determine which shaders 
+survive and are used to produce the next generation.
+
+
+\section*{Aesthetic Measures}
+
+\subsection*{Shannon Entropy}
+
+\subsection*{Ross Ralph and Zong}
+
+\subsection*{Reflectional Symmetry}
+
+
+\end{document}

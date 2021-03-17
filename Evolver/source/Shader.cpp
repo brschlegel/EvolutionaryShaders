@@ -41,3 +41,20 @@ bool Shader::operator< (const Shader &other)
 {
     return score < other.score;
 }
+
+Tree* Shader::getTreeByIndex(int i)
+{
+    switch(i)
+    {
+        case 0:
+            return redTree;
+            break;
+        case 1:
+            return blueTree;
+            break;
+        case 2:
+            return greenTree;
+            break;
+    }
+    return NULL;
+}

@@ -14,7 +14,7 @@ int main()
 
     Writer w;
    
-    World world = World(0,5,50,10);
+    World world = World(0,10,500,10);
     vector<Shader*> shaders = world.evolve();
     for(Shader* s : shaders)
     {
@@ -22,8 +22,5 @@ int main()
     }
     
     w.write("complexity", shaders);
-    
-
-
 
 }

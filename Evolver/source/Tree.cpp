@@ -388,14 +388,13 @@ vector<Node *> Tree::getOperatorNodes(Node *node)
     {
         return nodes;
     }
-    vector<Node *> left = getOperatorNodes(node->left);
-    nodes.insert(nodes.end(), left.begin(), left.end());
-
     if (node->typeId != 0)
     {
         nodes.push_back(node);
     }
-
+    vector<Node *> left = getOperatorNodes(node->left);
+    nodes.insert(nodes.end(), left.begin(), left.end());
+    
     vector<Node *> right = getOperatorNodes(node->right);
     nodes.insert(nodes.end(), right.begin(), right.end());
     return nodes;

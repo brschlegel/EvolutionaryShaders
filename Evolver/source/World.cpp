@@ -30,6 +30,7 @@ void World::createNewGeneration()
 {
     int numPerSurvivor = populationSize / numSurvivors;
     vector<Shader*> newGen;
+    crossover();
     for(Shader* s : shaders)
     {
         for(int i = 0; i < numPerSurvivor; i++)
@@ -54,6 +55,71 @@ vector<Shader*> World::evolve()
         createNewGeneration();
     }
     return getSurvivors();
+}
+
+//this method is a little ugly, and very verbose
+// I wanna make sure I do things right here, as well as try to make it effecient, hence all the naming and extra variables
+void World::crossover()
+{
+    vector<Shader*> crossover;
+    int size = shaders.size();
+    for(int i = 0; i < size; i++)
+    {
+        int random = rand() % shaders.size();
+        crossover.push_back(shaders[random]);
+        shaders.erase(shaders.begin() + random);
+    }
+    //now order of crossover is randomized
+    for(int i = 0; i < size/2; i++)
+    {
+        Shader* first = crossover[2*i];
+        Shader* second = crossover[2* i+1];
+        for(int j = 0; j < 3; j++)
+        {
+            Tree* firstTree = first->getTreeByIndex(j);
+            vector<Node*> firstOperatorList = firstTree->getOperatorNodes(firstTree->root);
+            
+            Node* firstNode = firstOperatorList[(rand() % firstOperatorList.size())];
+            Node* firstSwitchNode;
+            bool firstLeft = rand() % 2 == 0;
+            if(firstLeft)
+            {
+                firstSwitchNode = firstNode->left;
+            }
+            else
+            {
+                firstSwitchNode = firstNode->right;
+            }
+            
+            Tree* secondTree = second->getTreeByIndex(j);
+            vector<Node*> secondOperatorList = secondTree->getOperatorNodes(secondTree->root);
+            Node* secondNode = secondOperatorList[rand() % secondOperatorList.size()];
+            Node* secondSwitchNode;
+            bool secondLeft = rand() % 2 == 0;
+            if(secondLeft)
+            {
+                secondSwitchNode = secondNode->left;
+            }
+            else
+            {
+                secondSwitchNode = secondNode->right;
+            }
+
+            //actually do the crossover
+            if(firstLeft)
+                firstNode->left = secondSwitchNode;
+            else    
+                firstNode->right = secondSwitchNode;
+            if(secondLeft)
+                secondNode->left = firstSwitchNode;
+            else
+                secondNode->right = firstSwitchNode;
+
+            
+        }
+    }
+
+    shaders = crossover;
 }
 
 World::World(int numRegions, int numSurvivors, int populationSize, int numGenerations)

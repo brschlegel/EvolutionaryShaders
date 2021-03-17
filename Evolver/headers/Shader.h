@@ -15,4 +15,5 @@ public:
     void unload();
     string ToString();
     bool operator< (const Shader &other);
+    Tree* getTreeByIndex(int i);
 };

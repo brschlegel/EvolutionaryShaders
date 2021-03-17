@@ -29,6 +29,7 @@ public:
     void assignScore(Shader* shader, FitnessFunction fit);
     void createNewGeneration();
     vector<Shader*> evolve();
+    void crossover();
     vector<Shader*> getSurvivors();
 
 };
