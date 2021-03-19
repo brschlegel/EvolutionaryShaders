@@ -42,6 +42,8 @@ GlobalVars::GlobalVars()
 
     randomNumMax = 10;
     randomNumMin = 1;
+    numTimeStep = 5;
+    numRegions = 20;
 
     variables.push_back("UV.x");
     variables.push_back("UV.y");
@@ -94,4 +96,21 @@ string GlobalVars::getStringOfOperator(Operators op)
 string GlobalVars::getRandomVar()
 {
     return variables[rand()%variables.size()];
+}
+
+float GlobalVars::timeStepFunc(int i)
+{
+    return (100 * i) + 1;
+}
+
+float GlobalVars::clampValue(float val, float lower, float upper)
+{
+    float num = val;
+    if(val > upper)
+        num = upper;
+    if(val < lower)
+        num = lower;
+    return num;
+
+
 }

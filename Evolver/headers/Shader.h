@@ -16,4 +16,7 @@ public:
     string ToString();
     bool operator< (const Shader &other);
     Tree* getTreeByIndex(int i);
+    Color ***colorsByTimeStep;
+    void calculateColorsAtTimeStep(int timeStep);
+    float averageDiffOverTime();
 };

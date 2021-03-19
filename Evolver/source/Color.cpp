@@ -6,3 +6,10 @@ Color::Color(float red, float blue, float green)
     this->blue = blue;
     this->green = green;
 }
+
+Color::Color()
+{
+    this->red = 0;
+    this->blue = 0;
+    this->green = 0;
+}

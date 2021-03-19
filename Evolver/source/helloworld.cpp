@@ -14,11 +14,13 @@ int main()
 
     Writer w;
    
-    World world = World(0,10,500,10);
+    World world = World(0,10,50,20);
     vector<Shader*> shaders = world.evolve();
+    cout<<"evolution done" <<endl;  
     for(Shader* s : shaders)
     {
-        cout << s->ToString() << endl;
+        world.assignScore(s, FitnessFunction::NumVariable);
+        cout << "score: " << s->score <<endl;
     }
     
     w.write("complexity", shaders);

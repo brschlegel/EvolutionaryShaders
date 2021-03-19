@@ -5,7 +5,7 @@
 [ext_resource path="res://shaders/complexity_6.shader" type="Shader" id=3]
 [ext_resource path="res://shaders/complexity_5.shader" type="Shader" id=4]
 [ext_resource path="res://shaders/complexity_0.shader" type="Shader" id=5]
-[ext_resource path="res://shaders/complexity_3.shader" type="Shader" id=6]
+[ext_resource path="res://shaders/complexity_2.shader" type="Shader" id=6]
 [ext_resource path="res://shaders/complexity_1.shader" type="Shader" id=7]
 [ext_resource path="res://shaders/complexity_7.shader" type="Shader" id=8]
 [ext_resource path="res://shaders/complexity_8.shader" type="Shader" id=9]
@@ -42,11 +42,11 @@ shader = ExtResource( 10 )
 
 [node name="Sprite" parent="." instance=ExtResource( 1 )]
 material = SubResource( 1 )
-position = Vector2( 162.5, 0 )
+position = Vector2( 163.5, 0 )
 
 [node name="Sprite3" parent="." instance=ExtResource( 1 )]
 material = SubResource( 2 )
-position = Vector2( 329, -2 )
+position = Vector2( 330, -2 )
 
 [node name="Sprite2" parent="." instance=ExtResource( 1 )]
 material = SubResource( 3 )

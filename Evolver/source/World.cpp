@@ -3,6 +3,11 @@
 void World::assignScore(Shader* shader, FitnessFunction fit)
 {
     float num = 0;
+    for(int i = 0; i < GlobalVars::getInstance()->numTimeStep; i++)
+    {
+     shader->calculateColorsAtTimeStep(i);
+    }
+    num += shader->averageDiffOverTime()*4;
     switch(fit)
     {
     case FitnessFunction::NumVariable:
@@ -53,6 +58,7 @@ vector<Shader*> World::evolve()
         }
         shaders = getSurvivors();
         createNewGeneration();
+        cout << "generation " << i << " done"<<endl;
     }
     return getSurvivors();
 }
@@ -78,7 +84,8 @@ void World::crossover()
         {
             Tree* firstTree = first->getTreeByIndex(j);
             vector<Node*> firstOperatorList = firstTree->getOperatorNodes(firstTree->root);
-            
+            if(firstOperatorList.size() <= 0)
+                break;
             Node* firstNode = firstOperatorList[(rand() % firstOperatorList.size())];
             Node* firstSwitchNode;
             bool firstLeft = rand() % 2 == 0;
@@ -93,6 +100,8 @@ void World::crossover()
             
             Tree* secondTree = second->getTreeByIndex(j);
             vector<Node*> secondOperatorList = secondTree->getOperatorNodes(secondTree->root);
+            if(secondOperatorList.size() <= 0)
+                break;
             Node* secondNode = secondOperatorList[rand() % secondOperatorList.size()];
             Node* secondSwitchNode;
             bool secondLeft = rand() % 2 == 0;

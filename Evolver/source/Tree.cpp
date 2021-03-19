@@ -95,7 +95,17 @@ void Tree::unloadR(Node* node)
 }
 float Tree::solve(float X, float Y, float TIME)
 {
-    return solveR(root, X, Y, TIME);
+    float f = solveR(root, X, Y, TIME);
+    if(_isnanf(f))
+    {
+    return 0;
+    }
+    
+    if(f == INFINITY )
+    {
+        return 255;
+    }
+    return f;
 }
 
 float Tree::solveR(Node *node, float X, float Y, float TIME)
@@ -394,7 +404,7 @@ vector<Node *> Tree::getOperatorNodes(Node *node)
     }
     vector<Node *> left = getOperatorNodes(node->left);
     nodes.insert(nodes.end(), left.begin(), left.end());
-    
+
     vector<Node *> right = getOperatorNodes(node->right);
     nodes.insert(nodes.end(), right.begin(), right.end());
     return nodes;

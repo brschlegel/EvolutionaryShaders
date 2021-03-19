@@ -32,8 +32,12 @@ public:
     Operators getRandomOperator();
     string getStringOfOperator(Operators op);
     string getRandomVar();
+    float clampValue(float val, float lower, float upper);
+    float timeStepFunc(int i);
     int randomNumMin;
     int randomNumMax;
+    int numTimeStep;
+    int numRegions;
   
 private:
     

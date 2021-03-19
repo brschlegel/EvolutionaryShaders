@@ -1,0 +1,4 @@
+shader_type canvas_item;
+void fragment(){
+     COLOR = vec4((UV.x-(5.000000f*cos(((((UV.y-3f)-1.500000f)-6f)*(1.000000f*sin(2.000000f)))))), ((TIME/(((((5.000000f*(3.500000f+3.000000f))/8f)+sin((UV.y+sin((4.000000f*cos(4f))))))*cos(((((TIME-4.000000f)-TIME)+cos(UV.y))+sin((((UV.y-(UV.y+cos(5.000000f)))+7.000000f)*sin(((5.000000f*sin(1.000000f))*cos(3.500000f))))))))-(9f+cos(10f))))*sin(((TIME+sin(((((10.000000f-(2f+sin(2.000000f)))-TIME)+8.000000f)*sin(((2.000000f+sin(4.000000f))*cos(TIME))))))*3.000000f))), (((2.000000f/3.000000f)+sin((((1.500000f*(UV.x*UV.x))*((7f+sin((UV.y+cos(3f))))+(UV.y+cos(3f))))+cos(UV.x))))*(3.000000f-8.000000f)),1);
+}
