@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{amsmath,amsfonts,amssymb,latexsym}
 
 \title{Investigating the use of aesthetic measures over time with unsupervised evolutionary art}
 \author{Ben Schlegel}
@@ -21,10 +22,79 @@ survive and are used to produce the next generation.
 \section*{Aesthetic Measures}
 
 \subsection*{Shannon Entropy}
+Shannon entropy is an aesthetic measure that attempts to use information theory to get an aesthetic value of an image. We use a method similar to Heijer and Eiben to calculate the score for these images. 
+First we convert the image to grayscale using the average method, and then sort the image regions into a histogram of 128 values. We then calculate the score by
+\begin{equation*}
+    M = - \sum_{i=0}^{127} p(x_i) * log(p(x_i))
+\end{equation*}
+where $p(x_i)$ is the probability that a random region will have that value. The image will score high on this measure if the probability is distributed uniformly.
 
-\subsection*{Ross Ralph and Zong}
+\subsection*{Bell Curve}
+This aesthetic measure is based on the observation that many fine art paintings have color gradients that conform to a normal distribution. The measure was first proposed by Ross Ralph and Zong.
+To start the calculation, we calculate the gradient of the red values of each region using
+\begin{equation*}
+    |\Delta r_{i,j}|^2 = (r_{i,j} - r_{i+1,j+1})^2 + (r_{i+1,j} - r_{i,j+1})^2
+\end{equation*}
+Calculating the blue and green region gradients is similar. Using the gradients for the RGB values of each region, we now calculate the overall gradient $S_{i,j}$ for each region
+\begin{equation*}
+    S_{i,j} = \sqrt{|\Delta r_{i,j}|^2 + |\Delta g_{i,j}|^2 + |\Delta b_{i,j}|^2}
+\end{equation*}
+After this we calculate the response $R_{i,j}$ for each region 
+\begin{equation*}
+    R_{i,j} = \frac{S_{i,j}}{S_0}
+\end{equation*}
+where $S_0$ is the detection threshold, set to 2 as in Ross Ralph and Zong.
+This score is calculated by the difference between the normal distribution and actual distribution, so we need to calculate a mean $\mu$
+\begin{equation*}
+    \mu = \frac{\sum_{i,j}(R_{i,j})^2}{\sum_{i,j}(R_{i,j})}
+\end{equation*}
+and standard deviation $\sigma^2$
+\begin{equation*}
+    \sigma^2 = \frac{\sum_{i,j}R_{i,j}(R_{i,j} - \mu)^2}{\sum_{i,j}R_{i,j}}
+\end{equation*}
+Using $\mu$ and $\sigma$, The values for $R_{i,j}$ are stored in a histogram where bin width is $\sigma /100$. Using the histogram we can calculate the actual probability $p_i$ and the expected probability $q_i$. This is the score
+\begin{equation*}
+    M = 1000\sum p_i * log(\frac{p_i}{q_i})
+\end{equation*}
 
 \subsection*{Reflectional Symmetry}
-
+We use a reflectional symmetry aesthetic measure similar to the one define din Heijer and Eiben. First the image is divided into 4 quadrants, $A_1$, $A_2$, $A_3$, $A_4$. Left, right top and bottom are defined as
+$A_{left} = A_1 \bigcup A_3$, $A_{right} = A_2 \bigcup A_4$, $A_{top} = A_1 \bigcup A_2$, $A_{bottom} = A_3 \bigcup A_4$\\
+Horizontal symmetry is defined as 
+\begin{equation*}
+    S_h = s(A_{left}, A_{right})
+\end{equation*}
+vertical symmetry is 
+\begin{equation*}
+    S_v = s(A_{top}, A_{bottom})
+\end{equation*}
+and diagonal symmetry is 
+\begin{equation*}
+    S_d = \frac{s(A_1, A_4) + s(A_2, A_3)}{2}
+\end{equation*}
+where the similarity between two areas is defined as 
+\begin{equation*}
+    s(A_i, A_j) = \frac{\sum^w_{x=0} \sum^h_{y=0}(sim(A_i(x,y), \bar{A_j}(x,y)))}{w*h}
+\end{equation*}
+where $x$ and $y$ are the coordinates of the region, and $w$ and $h$ are the width and height of the area. $\bar{A}$ is the mirrored area of $A$, with respect to the 
+symmetry we are trying to measure. $sim$ is defined as
+\[
+    sim(A_i(x,y), A_j(x,y)) = 
+    \begin{cases}
+        1 & \text{if   } |A_i(x,y) - \bar{A_j}(x,y)| < \alpha\\
+        0 & \text{otherwise}
+    \end{cases}
+\]
+We use $\alpha = .05$ as our threshold.
+Therefore the score for strict symmetry is 
+\begin{equation*}
+    M_{strict} = \frac{S_h + S_v + S_d}{3}
+\end{equation*}
+There is a danger, however, in just using symmetry as a fitness function, as monochrome and monotonous images are very easy to evolve, and are also very symmetrical. Heijer and Eiben point this out, and suggest
+a 'liveliness' factor. We do the same here, and use our Shannon Entropy score to add some more variety to the images produced.
+Therefore our score is 
+\begin{equation*}
+    M = M_{strict} * M_{shannon}^3
+\end{equation*}
 
 \end{document}
