@@ -20,7 +20,7 @@ survive and are used to produce the next generation.
 
 
 \section*{Aesthetic Measures}
-
+A set of X images are produced using each shader for different time steps. These are then fed through an aesthetic measurement to get a score, and the scores are then averaged to get a score for the shader. A score for producing change over time is also added, and is discussed further on.
 \subsection*{Shannon Entropy}
 Shannon entropy is an aesthetic measure that attempts to use information theory to get an aesthetic value of an image. We use a method similar to Heijer and Eiben to calculate the score for these images. 
 First we convert the image to grayscale using the average method, and then sort the image regions into a histogram of 128 values. We then calculate the score by
@@ -97,4 +97,46 @@ Therefore our score is
     M = M_{strict} * M_{shannon}^3
 \end{equation*}
 
+\section*{Evolutionary Algorithm}
+The evolution of shaders is done by our own software. In the program, shaders are represented through 3 expression trees, with one for red, blue, and green colors. In these trees, there are 
+operator nodes, which have two children, and leaf nodes which do not have children. All operators have 2 children to avoid making invalid trees during mutation and crossover stages. 
+Operators are split into 3 types, which determine how their children are used in calculation and writing. Type 1 operators use a "left right" orientation, for example, the plus operator: Uv.x + 3. 
+Type 2 operators are functions with 2 inputs, for example the noise operator, noise(2,4). Type 3 operators are functions with only one input, and to preserve each operator having 2 children, for example the PlusCos operator: 3 + cos(14).
+\\
+\begin{tabular}{|c|c|c|c|}
+    \hline
+    Operator & Type&  Example & Description\\
+    \hline
+    Plus & 1 & Uv.x + 32 & Standard Addition \\
+    \hline
+    Minus & 1 &TIME - 3 & Standard Subtraction \\
+    \hline
+    Multiply & 1 & 15 * Uv.y & Standard Multiplication  \\
+    \hline
+    Divide & 1 & 23 /32 & Standard Division  \\
+    \hline
+    PlusCos & 3 & Uv.y Cos(34) & Left child added to cosine of right child  \\
+    \hline
+    MultCos & 3 & 20 * Cos(Uv.x) & Left child multiplied by cosine of right child  \\
+    \hline
+    PlusSin & 3  & 24 + sin(32) & Left child added to sin of right child  \\
+    \hline
+    Multiply & 3 & 15 * sin(21)& Left child multiplied by sine of right child   \\
+    \hline
+\end{tabular}\\\\
+Leaf nodes are further split into constants, and variables. 
+\\\\
+\begin{tabular}{|c|c|}
+    \hline
+    Variable & Description \\ 
+    \hline
+    Uv.x & x coordinate of current pixel, normalized [0,1]\\
+    \hline
+    Uv.y & y coordinate of current pixel, normalized [0,1]\\
+    \hline
+    TIME & Time since shader started\\
+    \hline
+\end{tabular}\\\\
+These expression trees are traversed inorder to write the trees into a Godot shader. The shader's trees are solved to produce a matrix of colors at different time steps. The average difference between every timestep and its following timestep is then computed,
+and then the average of those averages is added to the fitness score, with shdaders that vary more being favored over more static shaders.
 \end{document}

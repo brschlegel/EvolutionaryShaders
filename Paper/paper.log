@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.9.2)  20 MAR 2021 15:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.9.2)  21 MAR 2021 22:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -124,20 +124,40 @@ LaTeX Font Info:    Trying to load font information for U+lasy on input line 10.
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 ) [1
 
-{c:/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [1] [2] [3] (c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.aux) ) 
+{c:/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [1] [2]
+Overfull \hbox (24.16737pt too wide) in paragraph at lines 101--142
+[] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--142
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--142
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--142
+
+ []
+
+[3] [4] (c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.aux) ) 
 Here is how much of TeX's memory you used:
  1558 strings out of 480893
  19863 string characters out of 5911973
- 255948 words of memory out of 5000000
+ 259948 words of memory out of 5000000
  17189 multiletter control sequences out of 15000+600000
  543886 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  35i,9n,33p,669b,205s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.pdf (4 pages, 131215 bytes).
+Output written on c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.pdf (5 pages, 136273 bytes).
 PDF statistics:
- 61 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+ 64 PDF objects out of 1000 (max. 8388607)
+ 45 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
