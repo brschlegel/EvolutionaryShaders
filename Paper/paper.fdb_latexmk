@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1616378603 "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.tex" "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.pdf" "paper" 1616378604
-  "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.aux" 1616378604 8 a94a2480d3289e625eea47cd1b285758 ""
-  "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.tex" 1616378602 8462 d6f60984e2403ef8417b64da36406910 ""
+["pdflatex"] 1616379043 "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.tex" "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.pdf" "paper" 1616379045
+  "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.aux" 1616379045 8 a94a2480d3289e625eea47cd1b285758 ""
+  "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.tex" 1616379042 9112 3848cacdfa9da9daa8d55116e1369fc6 ""
   "c:/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1599018415 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1599016804 1004 54797486969f23fa377b128694d548df ""
   "c:/texlive/2020/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1599016804 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -59,11 +59,11 @@
   "c:/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1599021985 5049784 952c99f7ebd3174ed91bc4c7c35ebf98 ""
   "c:/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1599022209 2440411 e8cc4e7580f8bce2ed2b727015f392aa ""
   "c:/texlive/2020/texmf.cnf" 1599021955 673 4ae7b2f49cee444c5343a45b5d0f169c ""
-  "paper.aux" 1616378604 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
-  "paper.tex" 1616378602 8462 d6f60984e2403ef8417b64da36406910 ""
+  "paper.aux" 1616379045 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
+  "paper.tex" 1616379042 9112 3848cacdfa9da9daa8d55116e1369fc6 ""
   (generated)
-  "paper.aux"
-  "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.pdf"
-  "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.log"
   "paper.pdf"
   "paper.log"
+  "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.pdf"
+  "c:/Users/Ben/Documents/ArtandAIProject/Paper/paper.log"
+  "paper.aux"

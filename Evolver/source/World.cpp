@@ -14,7 +14,44 @@ void World::assignScore(Shader* shader, FitnessFunction fit)
         num += shader->redTree->getVarLeavesR(shader->redTree->root).size();
         num += shader->blueTree->getVarLeavesR(shader->blueTree->root).size();
         num += shader->greenTree->getVarLeavesR(shader->greenTree->root).size();
+        break;
+    case FitnessFunction::Shannon:
+     
+        for(int i = 0; i < GlobalVars::getInstance()->numTimeStep; i++)
+        {
+            int histogram[256];
+            for(int i = 0; i < 256; i++)
+            {
+                histogram[i] = 0;
+            }
+            for( int j = 0; j < GlobalVars::getInstance()->numRegions; j++)
+            {
+                for( int k = 0; k < GlobalVars::getInstance()->numRegions; k++)
+                {
+                    float sum = 0;
+                    sum += shader->colorsByTimeStep[i][j][k].red;
+                    sum += shader->colorsByTimeStep[i][j][k].blue;
+                    sum += shader->colorsByTimeStep[i][j][k].green;
+                    sum /= 3;
+                    sum *= 255;
+                    histogram[(int)sum]++;
+                }
+            }
+            float total =  GlobalVars::getInstance()->numRegions *  GlobalVars::getInstance()->numRegions;
+            float score = 0;
+            for(int i = 0; i < 256; i++)
+            {
+                float pxi = (float)histogram[i]/total;
+                if(pxi != 0)
+                    score += pxi * log10(pxi);
+            }
+         
+            num += -score;
+        
+        }
+        break;
     }
+    
     shader->score = num;
 }
 
@@ -54,7 +91,7 @@ vector<Shader*> World::evolve()
     {
         for(Shader* s : shaders)
         {
-            assignScore(s, FitnessFunction::NumVariable);
+            assignScore(s, FitnessFunction::Shannon);
         }
         shaders = getSurvivors();
         createNewGeneration();

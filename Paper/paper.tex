@@ -98,6 +98,7 @@ Therefore our score is
 \end{equation*}
 
 \section*{Evolutionary Algorithm}
+\subsection*{Representation of shaders}
 The evolution of shaders is done by our own software. In the program, shaders are represented through 3 expression trees, with one for red, blue, and green colors. In these trees, there are 
 operator nodes, which have two children, and leaf nodes which do not have children. All operators have 2 children to avoid making invalid trees during mutation and crossover stages. 
 Operators are split into 3 types, which determine how their children are used in calculation and writing. Type 1 operators use a "left right" orientation, for example, the plus operator: Uv.x + 3. 
@@ -139,4 +140,8 @@ Leaf nodes are further split into constants, and variables.
 \end{tabular}\\\\
 These expression trees are traversed inorder to write the trees into a Godot shader. The shader's trees are solved to produce a matrix of colors at different time steps. The average difference between every timestep and its following timestep is then computed,
 and then the average of those averages is added to the fitness score, with shdaders that vary more being favored over more static shaders.
+\subsection*{Evolving shaders}
+To start, the algorithm is initialized by shaders with random numbers of nodes and randomized values. Then each shader has its fitness score assigned, by the average difference over time and the chosen aesthetic measure. 
+After the shaders have had their fitness value calculated X number of survivors are selected. The survivors are then paired up, and crossed over by swapping 2 nodes (and by extension its children) on each red, blue, and green
+tree. Then Y copies are made of each survivor, and then mutated. Then the procedure is repeated until desired stopping point.
 \end{document}

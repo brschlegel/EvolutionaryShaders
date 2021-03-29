@@ -5,7 +5,8 @@
 
 enum FitnessFunction
 {
-    NumVariable
+    NumVariable,
+    Shannon
 };
 
 struct ScoreComparison
