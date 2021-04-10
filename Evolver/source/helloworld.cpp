@@ -16,7 +16,7 @@ int main()
 
     Writer w;
     auto startTime = std::chrono::steady_clock::now();
-    World world = World(20,10,20,100);
+    World world = World(20,10,20,10);
     vector<Shader*> shaders = world.evolve();
     cout<<"evolution done" <<endl;  
     for(Shader* s : shaders)

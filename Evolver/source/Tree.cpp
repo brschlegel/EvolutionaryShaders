@@ -156,6 +156,12 @@ float Tree::solveR(Node *node, float X, float Y, float TIME)
         case Operators::SinPlus:
             return solveR(node->left, X, Y, TIME) + sinf(solveR(node->right, X, Y, TIME));
             break;
+        case Operators::Impulse:
+            return impulse(solveR(node->left, X, Y, TIME), solveR(node->right, X, Y, TIME));
+            break;
+        case Operators::Parabola:
+            return parabola(solveR(node->left, X, Y, TIME), solveR(node->right, X, Y, TIME));
+            break;
         }
     }
     return stof(node->info);
@@ -184,19 +190,29 @@ vector<string> Tree::toStringR(Node *node)
     {
         s.push_back("(");
     }
+    if(node->typeId == 3)
+        s.push_back(node->info);
+        
     vector<string> left = toStringR(node->left);
     s.insert(s.end(), left.begin(), left.end());
 
-    s.push_back(node->info);
+    if(node->typeId != 3)
+        s.push_back(node->info);
+
     if (node->typeId == 0 && !GlobalVars::getInstance()->isVariable(node->info))
     {
         s.push_back("f");
     }
 
+    if(node->typeId == 3)
+    {
+        s.push_back(",");
+    }
+
     vector<string> right = toStringR(node->right);
     s.insert(s.end(), right.begin(), right.end());
 
-    if (node->typeId == 2)
+    if (node->typeId == 2 || node->typeId == 3)
     {
         s.push_back(")");
     }
@@ -447,4 +463,15 @@ vector<Node *> Tree::getLeavesR(Node *node)
     vector<Node *> right = getLeavesR(node->right);
     nodes.insert(nodes.end(), right.begin(), right.end());
     return nodes;
+}
+
+float Tree::impulse(float x, float k)
+{
+    float h = k * x;
+    return h * powf(2.71828f,1-h);
+}
+
+float Tree::parabola(float k, float x)
+{
+    return powf( 4.0 * x * (1.0-x), x);
 }

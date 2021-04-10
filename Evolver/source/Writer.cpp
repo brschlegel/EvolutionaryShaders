@@ -12,6 +12,16 @@ void Writer::write(std::string path, vector<Shader *> shaders)
 
         output.open(sPath);
         output << "shader_type canvas_item;" << endl;
+        //impulse
+        output << "float impulse( float x, float k )" << endl << "{" << endl;
+        output << "float h = k*x;" << endl << "return h*exp(1.0-h);" << endl << "}" << endl; 
+
+        //parabola
+        output << "float parabola( float x, float k )" << endl << "{" << endl;
+        output << "return pow( 4.0*x*(1.0-x), k );" << endl << "}" << endl; 
+
+        //shader itself
+
         output << "void fragment(){" << endl;
         output << "     COLOR = vec4(";
         output << shaders[i]->redTree->toString() << ", ";

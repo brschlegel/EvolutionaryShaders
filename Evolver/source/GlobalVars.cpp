@@ -57,6 +57,8 @@ GlobalVars::GlobalVars()
     operatorMap["*cos("] = Operators::CosMultiply;
     operatorMap["+sin("] = Operators::SinPlus;
     operatorMap["*sin("] = Operators::SinMultiply;
+    operatorMap["parabola("] = Operators::Parabola;
+    operatorMap["impulse("] = Operators::Impulse;
 
     type1.push_back(Operators::Plus);
     type1.push_back(Operators::Minus);
@@ -69,7 +71,7 @@ GlobalVars::GlobalVars()
     type2.push_back(Operators::SinMultiply);
 
     type3.push_back(Operators::Impulse);
-    type3.push_back(Operators::Gain);
+    type3.push_back(Operators::Parabola);
 }
 
 bool GlobalVars::isVariable(string info)

@@ -1,4 +1,13 @@
 shader_type canvas_item;
+float impulse( float x, float k )
+{
+float h = k*x;
+return h*exp(1.0-h);
+}
+float parabola( float x, float k )
+{
+return pow( 4.0*x*(1.0-x), k );
+}
 void fragment(){
-     COLOR = vec4(9.000000f, (UV.y+sin(((1.250000f*((UV.x/(3f+(5.000000f/2.000000f)))*sin(6.000000f)))*sin((4.000000f-((7.000000f*sin(TIME))/((((((((7.000000f-(4.000000f*(((2.000000f*cos(1.000000f))+sin((9.000000f+cos(3.000000f))))*cos((6.000000f/(10.000000f*3.000000f))))))*9.000000f)*(5.000000f+(1.000000f+sin((10.000000f*cos((5.000000f*cos(6.000000f))))))))+cos(3.000000f))*UV.x)*(3f+cos(UV.y)))-((7.000000f/UV.x)+(((1.250000f*((UV.x/(2.000000f+((6.000000f+1.000000f)/2.000000f)))*sin(3.000000f)))*sin((4.000000f-(UV.x/((4.000000f-UV.x)*((2.000000f-3.000000f)*cos((2.500000f-5.000000f))))))))+sin(TIME))))*(1.000000f*TIME)))))))), (10.000000f+TIME),1);
+     COLOR = vec4((6.000000f*UV.y), 5.000000f, UV.y,1);
 }

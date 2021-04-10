@@ -39,6 +39,8 @@ public:
     vector<Node*> getVarLeavesR(Node* node);
     vector<Node*> getNumLeavesR(Node* Node);
     vector<Node*> getOperatorNodes(Node* node);
+    float impulse(float k, float x);
+    float parabola(float x, float k);
  
  
 
