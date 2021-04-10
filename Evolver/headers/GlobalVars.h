@@ -16,7 +16,9 @@ enum Operators
     CosPlus,
     CosMultiply,
     SinPlus,
-    SinMultiply
+    SinMultiply,
+    Gain,
+    Impulse
 };
 class GlobalVars;
 class GlobalVars

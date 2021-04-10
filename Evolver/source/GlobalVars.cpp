@@ -42,7 +42,7 @@ GlobalVars::GlobalVars()
 
     randomNumMax = 10;
     randomNumMin = 1;
-    numTimeStep = 5;
+    numTimeStep = 10;
     numRegions = 20;
 
     variables.push_back("UV.x");
@@ -67,6 +67,9 @@ GlobalVars::GlobalVars()
     type2.push_back(Operators::CosMultiply);
     type2.push_back(Operators::SinPlus);
     type2.push_back(Operators::SinMultiply);
+
+    type3.push_back(Operators::Impulse);
+    type3.push_back(Operators::Gain);
 }
 
 bool GlobalVars::isVariable(string info)

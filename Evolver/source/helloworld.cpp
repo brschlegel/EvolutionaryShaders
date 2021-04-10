@@ -5,16 +5,18 @@
 #include "../headers/Node.h"
 #include "../headers/Tree.h"
 #include "../headers/World.h"
+#include <chrono>
 
 using namespace std;
+
 
 int main()
 {
    
 
     Writer w;
-   
-    World world = World(20,20,50,20);
+    auto startTime = std::chrono::steady_clock::now();
+    World world = World(20,10,20,100);
     vector<Shader*> shaders = world.evolve();
     cout<<"evolution done" <<endl;  
     for(Shader* s : shaders)
@@ -26,3 +28,4 @@ int main()
     w.write("shannon", shaders);
 
 }
+

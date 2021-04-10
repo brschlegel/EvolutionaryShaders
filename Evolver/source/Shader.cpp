@@ -36,9 +36,12 @@ void Shader::unload()
     {
         for(int j = 0; j < GlobalVars::getInstance()->numRegions; j++)
         {
-            //delete[] colorsByTimeStep[i][j];
+            
+            delete[] colorsByTimeStep[i][j];
+            
         }
-        //delete[] colorsByTimeStep[i];
+        delete[] colorsByTimeStep[i];
+
     }
     delete[] colorsByTimeStep;
 }

@@ -7,7 +7,7 @@ void World::assignScore(Shader* shader, FitnessFunction fit)
     {
      shader->calculateColorsAtTimeStep(i);
     }
-    num += shader->averageDiffOverTime()*4;
+    num += shader->averageDiffOverTime()*GlobalVars::getInstance()->numTimeStep;
     switch(fit)
     {
     case FitnessFunction::NumVariable:
@@ -51,7 +51,7 @@ void World::assignScore(Shader* shader, FitnessFunction fit)
         }
         break;
     }
-    
+
     shader->score = num;
 }
 
@@ -95,7 +95,13 @@ vector<Shader*> World::evolve()
         }
         shaders = getSurvivors();
         createNewGeneration();
-        cout << "generation " << i << " done"<<endl;
+        cout << "generation " << i << " done     " << getElapsedSeconds()<<endl;
+        startTime = chrono::steady_clock::now();
+    }
+
+    for(Shader* s : shaders)
+    {
+            assignScore(s, FitnessFunction::Shannon);
     }
     return getSurvivors();
 }
@@ -168,12 +174,20 @@ void World::crossover()
     shaders = crossover;
 }
 
+double World::getElapsedSeconds()
+{
+    auto currentTime  = std::chrono::steady_clock::now();
+    return chrono::duration_cast<chrono::seconds>(currentTime - startTime).count();
+}
+
+
 World::World(int numRegions, int numSurvivors, int populationSize, int numGenerations)
 {
     this->numRegions = numRegions;
     this->numSurvivors = numSurvivors;
     this->populationSize = populationSize;
     this->numGenerations = numGenerations;
+    this->startTime = chrono::steady_clock::now();
     for(int i = 0; i < populationSize; i++)
     {
         shaders.push_back(new Shader());
