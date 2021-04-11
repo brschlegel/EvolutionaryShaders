@@ -44,6 +44,7 @@ GlobalVars::GlobalVars()
     randomNumMin = 1;
     numTimeStep = 10;
     numRegions = 20;
+    simThreshold = .05;
 
     variables.push_back("UV.x");
     variables.push_back("UV.y");

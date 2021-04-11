@@ -13,3 +13,9 @@ Color::Color()
     this->blue = 0;
     this->green = 0;
 }
+
+float Color::calculateGreyScale()
+{
+    float sum = red + blue + green;
+    return sum / 3.0f;
+}

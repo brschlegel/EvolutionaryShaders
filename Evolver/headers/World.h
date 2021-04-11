@@ -3,6 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <chrono>
+#include <array>
 
 enum FitnessFunction
 {
@@ -36,5 +37,7 @@ public:
     vector<Shader*> evolve();
     void crossover();
     vector<Shader*> getSurvivors();
-
+    float shannonScore(Shader* shader);
+    float symScore(Shader* shader);
+    int getSim(Shader* shader, int timeStep);
 };

@@ -40,6 +40,7 @@ public:
     int randomNumMax;
     int numTimeStep;
     int numRegions;
+    float simThreshold;
   
 private:
     

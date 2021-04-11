@@ -8,4 +8,5 @@ public:
     float green;
     Color(float red, float blue, float green);
     Color();
+    float calculateGreyScale();
 };
