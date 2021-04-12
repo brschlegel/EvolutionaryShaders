@@ -7,7 +7,7 @@ void World::assignScore(Shader *shader, FitnessFunction fit)
     {
         shader->calculateColorsAtTimeStep(i);
     }
-    num += shader->averageDiffOverTime() * GlobalVars::getInstance()->numTimeStep;
+    num += shader->averageDiffOverTime() * GlobalVars::getInstance()->numTimeStep * 100;
     switch (fit)
     {
     case FitnessFunction::NumVariable:
@@ -55,13 +55,29 @@ void World::createNewGeneration()
     shaders = newGen;
 }
 
-vector<Shader *> World::evolve()
+vector<Shader *> World::evolve(FitnessFunction fit)
 {
     for (int i = 0; i < numGenerations; i++)
     {
-        for (Shader *s : shaders)
+        threads.clear();
+        int numThreads = GlobalVars::getInstance()->numThreads;
+        int numShaders = shaders.size();
+        int numPerThread = numShaders / numThreads;
+        int start = 0;
+        for(int j= 0; j < numThreads - 1; j++)
         {
-            assignScore(s, FitnessFunction::Shannon);
+            std::thread th(&World::assignScoreGroup,this,start, start + numPerThread, fit);
+            threads.push_back(std::move(th));
+      
+            start += numPerThread;
+          
+        }
+        thread thEnd(&World::assignScoreGroup,this,start, numShaders, fit);
+        threads.push_back(std::move(thEnd));
+
+        for (int j = 0; j < threads.size(); j++)
+        {
+           threads[j].join();
         }
         shaders = getSurvivors();
         createNewGeneration();
@@ -71,7 +87,7 @@ vector<Shader *> World::evolve()
 
     for (Shader *s : shaders)
     {
-        assignScore(s, FitnessFunction::Shannon);
+        assignScore(s,fit);
     }
     return getSurvivors();
 }
@@ -161,6 +177,15 @@ World::World(int numRegions, int numSurvivors, int populationSize, int numGenera
     }
 }
 
+void World::assignScoreGroup(int start, int end, FitnessFunction fit)
+{
+    for(int i = 0; i < (end - start); i++ )
+    {
+        assignScore(shaders[i + start], fit);
+    }
+    cout << "thread done" << endl;
+}
+
 float World::shannonScore(Shader *shader)
 {
     float num = 0;
@@ -205,7 +230,7 @@ float World::symScore(Shader* shader)
     {
         num += getSim(shader, i);
     }
-    float liveliness = shannonScore(shader);
+    float liveliness = shannonScore(shader) * 10;
     num += liveliness * liveliness * liveliness;
     return num;
 }
@@ -277,6 +302,6 @@ int World::getSim(Shader* shader, int timeStep)
     }
 
     sim += sum / (size * size);
-
+    sim /= 3;
     return sim;
 }

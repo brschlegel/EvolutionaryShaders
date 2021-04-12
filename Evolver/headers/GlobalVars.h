@@ -41,6 +41,7 @@ public:
     int numTimeStep;
     int numRegions;
     float simThreshold;
+    int numThreads;
   
 private:
     

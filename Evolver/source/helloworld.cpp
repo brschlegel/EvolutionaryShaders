@@ -16,8 +16,8 @@ int main()
 
     Writer w;
     auto startTime = std::chrono::steady_clock::now();
-    World world = World(20,20,200,100);
-    vector<Shader*> shaders = world.evolve();
+    World world = World(40,50,400,100);
+    vector<Shader*> shaders = world.evolve(FitnessFunction::Symmetry);
     cout<<"evolution done" <<endl;  
     for(Shader* s : shaders)
     {
@@ -25,7 +25,7 @@ int main()
         cout << "score: " << s->score <<endl;
     }
     
-    w.write("shannon", shaders);
+    w.write("sym", shaders);
 
 }
 
