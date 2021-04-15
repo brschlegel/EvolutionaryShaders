@@ -22,7 +22,7 @@ void World::assignScore(Shader *shader, FitnessFunction fit)
             num += symScore(shader);
         break;
     }
-
+    GlobalVars::getInstance()->scoresCsv.addValue(num);
     shader->score = num;
 }
 
@@ -35,7 +35,12 @@ vector<Shader *> World::getSurvivors()
         shaders[i]->unload();
         shaders.erase(shaders.begin() + i);
     }
-    return vector<Shader *>(shaders.begin(), shaders.begin() + numSurvivors);
+    vector<Shader*> surv =  vector<Shader *>(shaders.begin(), shaders.begin() + numSurvivors);
+    for(int i = 0; i < surv.size(); i++)
+    {
+        GlobalVars::getInstance()->survivorScoresCsv.addValue(surv[i]->score);
+    }
+    return surv;
 }
 
 void World::createNewGeneration()
@@ -81,14 +86,32 @@ vector<Shader *> World::evolve(FitnessFunction fit)
         }
         shaders = getSurvivors();
         createNewGeneration();
-        cout << "generation " << i << " done     " << getElapsedSeconds() << endl;
+        float time = getElapsedSeconds();
+        GlobalVars::getInstance()->timeCsv.addValue(time);
+        cout << "generation " << i << " done     " << time << endl;
         startTime = chrono::steady_clock::now();
     }
 
-    for (Shader *s : shaders)
-    {
-        assignScore(s,fit);
-    }
+    threads.clear();
+        int numThreads = GlobalVars::getInstance()->numThreads;
+        int numShaders = shaders.size();
+        int numPerThread = numShaders / numThreads;
+        int start = 0;
+        for(int j= 0; j < numThreads - 1; j++)
+        {
+            std::thread th(&World::assignScoreGroup,this,start, start + numPerThread, fit);
+            threads.push_back(std::move(th));
+      
+            start += numPerThread;
+          
+        }
+        thread thEnd(&World::assignScoreGroup,this,start, numShaders, fit);
+        threads.push_back(std::move(thEnd));
+
+        for (int j = 0; j < threads.size(); j++)
+        {
+           threads[j].join();
+        }
     return getSurvivors();
 }
 
@@ -183,7 +206,6 @@ void World::assignScoreGroup(int start, int end, FitnessFunction fit)
     {
         assignScore(shaders[i + start], fit);
     }
-    cout << "thread done" << endl;
 }
 
 float World::shannonScore(Shader *shader)
@@ -230,7 +252,7 @@ float World::symScore(Shader* shader)
     {
         num += getSim(shader, i);
     }
-    float liveliness = shannonScore(shader) * 10;
+    float liveliness = shannonScore(shader);
     num += liveliness * liveliness * liveliness;
     return num;
 }

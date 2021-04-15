@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <time.h>
 #include <stdlib.h>
-
+#include "../headers/Csv.h"
 using namespace std;
 enum Operators
 {
@@ -26,6 +26,7 @@ class GlobalVars
 public:
     static GlobalVars *instance;
     static GlobalVars* getInstance();
+    void init();
 
     map<string, Operators> operatorMap;
     vector<string> variables;
@@ -42,6 +43,13 @@ public:
     int numRegions;
     float simThreshold;
     int numThreads;
+    int populationSize; 
+    int numSurvivors;
+    int numGenerations;
+
+    Csv scoresCsv;
+    Csv timeCsv;
+    Csv survivorScoresCsv;
   
 private:
     

@@ -74,6 +74,15 @@ GlobalVars::GlobalVars()
 
     type3.push_back(Operators::Impulse);
     type3.push_back(Operators::Parabola);
+
+   
+}
+
+void GlobalVars::init()
+{
+    scoresCsv = Csv(numGenerations, populationSize, "scores");
+    timeCsv = Csv(numGenerations, 1, "times");
+    survivorScoresCsv = Csv(numGenerations, numSurvivors, "survivorScores");
 }
 
 bool GlobalVars::isVariable(string info)

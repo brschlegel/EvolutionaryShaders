@@ -4,6 +4,8 @@
 
 [node name="Shower" type="Node2D"]
 script = ExtResource( 11 )
-string = "shannon"
+num = 50
+numRows = 5
+string = "sym"
 
 [node name="Camera2D" type="Camera2D" parent="."]
