@@ -5,7 +5,12 @@ Shader::Shader(const Shader& shader)
     redTree = new Tree(*shader.redTree);
     blueTree = new Tree(*shader.blueTree);
     greenTree = new Tree(*shader.greenTree);
-     colorsByTimeStep = new Color**[GlobalVars::getInstance()->numTimeStep];
+    //  for( int i = 0; i < GlobalVars::getInstance()->numTimeStep; i++)
+    //  {
+    //     colorsByTimeStep.push_back(vector<vector<Color>>());   
+    //  }
+    vector<vector<vector<Color>>> arr(GlobalVars::getInstance()->numTimeStep, vector<vector<Color>>(GlobalVars::getInstance()->numRegions, vector<Color>(GlobalVars::getInstance()->numRegions, Color()) ));
+    colorsByTimeStep = arr;
 }
 
 //Making random trees
@@ -14,7 +19,8 @@ Shader::Shader()
     redTree = new Tree();
     blueTree = new Tree();
     greenTree = new Tree();
-     colorsByTimeStep = new Color**[GlobalVars::getInstance()->numTimeStep];
+     vector<vector<vector<Color>>> arr(GlobalVars::getInstance()->numTimeStep, vector<vector<Color>>(GlobalVars::getInstance()->numRegions, vector<Color>(GlobalVars::getInstance()->numRegions, Color()) ));
+    colorsByTimeStep = arr;
 }
 
 void Shader::NaiveMutate()
@@ -32,18 +38,7 @@ void Shader::unload()
     delete redTree;
     delete blueTree;
     delete greenTree;
-    for(int i = 0; i <GlobalVars::getInstance()->numTimeStep; i++ )
-    {
-        for(int j = 0; j < GlobalVars::getInstance()->numRegions; j++)
-        {
-            
-            delete[] colorsByTimeStep[i][j];
-            
-        }
-        delete[] colorsByTimeStep[i];
-
-    }
-    delete[] colorsByTimeStep;
+    
 }
 
 void Shader::calculateColorsAtTimeStep(int timeStep)
@@ -51,16 +46,16 @@ void Shader::calculateColorsAtTimeStep(int timeStep)
     float actualTime = GlobalVars::getInstance()->timeStepFunc(timeStep);
     int numRegions = GlobalVars::getInstance()->numRegions;
     float increment = 1/(float)numRegions;
-    colorsByTimeStep[timeStep] = new Color*[numRegions];
+
     for(int i = 0; i < numRegions; i++)
     {
-        colorsByTimeStep[timeStep][i] = new Color[numRegions];
+
         for(int j = 0; j <numRegions; j++)
         {
             float red = GlobalVars::getInstance()->clampValue(redTree->solve(increment * i, increment*j,actualTime),0,1);
             float blue = GlobalVars::getInstance()->clampValue(blueTree->solve(increment * i, increment*j,actualTime),0,1);
             float green = GlobalVars::getInstance()->clampValue(greenTree->solve(increment * i, increment*j,actualTime),0,1);
-            colorsByTimeStep[timeStep][i][j] = Color(red, blue,green);
+            colorsByTimeStep[timeStep][i][j] =  Color(red, blue,green);
         }
     }
 }

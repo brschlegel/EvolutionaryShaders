@@ -42,10 +42,10 @@ GlobalVars::GlobalVars()
 
     randomNumMax = 10;
     randomNumMin = 1;
-    numTimeStep = 10;
+    numTimeStep = 20;
     numRegions = 20;
-    simThreshold = .05;
-    numThreads = 8;
+    simThreshold = .07;
+   
 
     variables.push_back("UV.x");
     variables.push_back("UV.y");
@@ -80,9 +80,11 @@ GlobalVars::GlobalVars()
 
 void GlobalVars::init()
 {
-    scoresCsv = Csv(numGenerations, populationSize, "scores");
-    timeCsv = Csv(numGenerations, 1, "times");
-    survivorScoresCsv = Csv(numGenerations, numSurvivors, "survivorScores");
+    scoresCsv = Csv(numGenerations +1 , populationSize, "scores");
+    timeDiffCsv = Csv(numGenerations + 1, populationSize, "timeDiff");
+    timeCsv = Csv(numGenerations+1, 1, "times");
+    survivorScoresCsv = Csv(numGenerations+ 1, numSurvivors, "survivorScores");
+    
 }
 
 bool GlobalVars::isVariable(string info)
@@ -116,7 +118,7 @@ string GlobalVars::getRandomVar()
 
 float GlobalVars::timeStepFunc(int i)
 {
-    return (100 * i) + 1;
+    return 2 * ((1000 * i) + 1);
 }
 
 float GlobalVars::clampValue(float val, float lower, float upper)

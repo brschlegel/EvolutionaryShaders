@@ -50,6 +50,7 @@ public:
     Csv scoresCsv;
     Csv timeCsv;
     Csv survivorScoresCsv;
+    Csv timeDiffCsv;
   
 private:
     

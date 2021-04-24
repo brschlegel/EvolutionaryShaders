@@ -7,7 +7,8 @@ void World::assignScore(Shader *shader, FitnessFunction fit)
     {
         shader->calculateColorsAtTimeStep(i);
     }
-    num += shader->averageDiffOverTime() * GlobalVars::getInstance()->numTimeStep * 100;
+    num += shader->averageDiffOverTime() * GlobalVars::getInstance()->numTimeStep * 2;
+    GlobalVars::getInstance()->timeDiffCsv.addValue(num);
     switch (fit)
     {
     case FitnessFunction::NumVariable:
@@ -252,8 +253,9 @@ float World::symScore(Shader* shader)
     {
         num += getSim(shader, i);
     }
+    num *= 10;
     float liveliness = shannonScore(shader);
-    num += liveliness * liveliness * liveliness;
+    num += liveliness * liveliness;
     return num;
 }
 
@@ -273,8 +275,12 @@ int World::getSim(Shader* shader, int timeStep)
             {
                 sum += 1;
             }
+            else{
+                sim = 0;
+            }
         }
     }
+
     sim += sum / (size * size);
     
     //Horizontal Sym
@@ -324,6 +330,85 @@ int World::getSim(Shader* shader, int timeStep)
     }
 
     sim += sum / (size * size);
-    sim /= 3;
+    sim /= 4;
     return sim;
+}
+
+float World::bellCurveScore(Shader* shader)
+{
+    int numRegions = GlobalVars::getInstance()->numRegions;
+    for(int timeStep = 0; timeStep < GlobalVars::getInstance()->numTimeStep; timeStep++)
+    {
+        vector<vector<float>> response = getResponse(shader, timeStep);
+        float sum = 0;
+        float sqrSum = 0;
+        float min = 9999999;
+        float max = -9999999;
+        
+        for(int i = 0; i < response.size(); i++)
+        {
+            for(int j = 0; j < response[i].size(); j++)
+            {
+                if(response[i][j] > max)
+                {
+                    max = response[i][j];
+                }
+
+                if(response[i][j] < min)
+                {
+                    min = response[i][j];
+                }
+                sum += response[i][j];
+                sqrSum += response[i][j] * response[i][j];
+            }
+        }
+
+        float mean = sqrSum / sum;
+        float stdSum = 0;
+        for(int i = 0; i < response.size(); i++)
+        {
+            for(int j = 0; j < response[i].size(); j++)
+            {
+               stdSum += response[i][j] - powf(response[i][j] - mean, 2);
+            }
+        }
+        float stdDev = sqrtf(stdSum / sum);
+        Histogram h = Histogram(mean, stdDev/100.0f, min, max);
+        for(int i = 0; i < response.size(); i++)
+        {
+            for(int j = 0; j < response[i].size(); j++)
+            {
+               h.addValue(response[i][j]);
+            }
+        }
+        float sum = 0;
+        for(int i = 0; i < h.bins.size(); i++)
+        {
+            float p = h.bins[i].entries.size() / h.count;
+            float q = Normal::pdf(h.bins[i].lower + h.bins[i].upper / 2, 0, stdDev);
+            sum += p * log10f(p/q);
+        }
+        return 1000 * sum;
+    }
+}
+
+vector<vector<float>> World::getResponse(Shader* shader, int timeStep)
+{
+    
+    int numRegions = GlobalVars::getInstance()->numRegions;
+
+    vector<vector<float>> response(numRegions - 1, vector<float>(numRegions -1));
+    for(int i = 0; i < numRegions -1; i++)
+    {
+        for(int j = 0; j < numRegions -1; j++)
+        {
+            response[i][j] += powf(shader->colorsByTimeStep[timeStep][i][j].red - shader->colorsByTimeStep[timeStep][i+1][j+1].red,2) + powf(shader->colorsByTimeStep[timeStep][i+1][j].red - shader->colorsByTimeStep[timeStep][i][j+1].red,2);
+            response[i][j] += powf(shader->colorsByTimeStep[timeStep][i][j].blue - shader->colorsByTimeStep[timeStep][i+1][j+1].blue,2) + powf(shader->colorsByTimeStep[timeStep][i+1][j].blue - shader->colorsByTimeStep[timeStep][i][j+1].blue,2);
+            response[i][j] += powf(shader->colorsByTimeStep[timeStep][i][j].green - shader->colorsByTimeStep[timeStep][i+1][j+1].green,2) + powf(shader->colorsByTimeStep[timeStep][i+1][j].green - shader->colorsByTimeStep[timeStep][i][j+1].green,2);
+
+            response[i][j] = sqrtf(response[i][j])/ 2.0f;
+        }
+    }
+
+    return response;
 }

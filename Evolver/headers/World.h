@@ -5,6 +5,7 @@
 #include <chrono>
 #include <array>
 #include <thread>
+#include "../headers/Stats.h"
 
 using namespace std;
 enum FitnessFunction
@@ -42,6 +43,8 @@ public:
     vector<Shader*> getSurvivors();
     float shannonScore(Shader* shader);
     float symScore(Shader* shader);
+    float bellCurveScore(Shader* shader);
+    vector<vector<float>> getResponse(Shader* shader, int timeStep);
     int getSim(Shader* shader, int timeStep);
     void assignScoreGroup(int start, int end, FitnessFunction fit);
 };

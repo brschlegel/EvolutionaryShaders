@@ -2,6 +2,7 @@
 #include "../headers/GlobalVars.h"
 #include "../headers/Tree.h"
 #include "../headers/Color.h"
+#include <vector>
 class Shader;
 class Shader{
 public:
@@ -16,7 +17,7 @@ public:
     string ToString();
     bool operator< (const Shader &other);
     Tree* getTreeByIndex(int i);
-    Color ***colorsByTimeStep;
+    vector<vector<vector<Color>>> colorsByTimeStep;
     void calculateColorsAtTimeStep(int timeStep);
     float averageDiffOverTime();
 };

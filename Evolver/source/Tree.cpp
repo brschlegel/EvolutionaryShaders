@@ -229,7 +229,16 @@ void Tree::naiveMutate()
     int numMutations = rand() % 4 + 1;
     for (int i = 0; i < numMutations; i++)
     {
-        int whichMutation = rand() % 8;
+         int whichMutation;
+        if(getNumLeavesR(root).size() < 20)
+        {
+            whichMutation = rand() % 8;
+        }
+        else
+        {
+            whichMutation = rand() % 6;
+        }
+        
         switch (whichMutation)
         {
         case 0:
@@ -254,19 +263,17 @@ void Tree::naiveMutate()
 
         //want to double the chance this occurs so the mutations dont converge to a one node tree
         case 4:
+           mutateVarToNum();
         case 5:
+          mutateOpToVar();
             //Change number to operator, then append random numbers
-            mutateLeafToOp();
+
             break;
 
         case 6:
-            //Change Variable to number
-            mutateVarToNum();
-            break;
-
         case 7:
             //Change operator to variable
-            mutateOpToVar();
+            mutateLeafToOp();
             break;
         }
     }

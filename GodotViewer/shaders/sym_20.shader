@@ -9,5 +9,5 @@ float parabola( float x, float k )
 return pow( 4.0*x*(1.0-x), k );
 }
 void fragment(){
-     COLOR = vec4(UV.x, (UV.y*sin((((parabola(((4.000000f/1.000000f)*((1.500000f/((2.000000f*cos(3.500000f))+cos(((impulse(0.500000f,5.000000f))+6.000000f))))*sin(2.000000f))),6.000000f))-(((1.250000f*sin(5.000000f))+sin(0.250000f))-9.000000f))+cos((UV.y+cos(((3.000000f+cos(2.000000f))*UV.x))))))), (parabola((parabola(UV.y,(((impulse((9.000000f+cos(6.000000f)),((1.000000f+sin((3.000000f*UV.y)))+TIME)))*sin((3.000000f/4.000000f)))+cos(4.000000f)))),(1.000000f*cos(UV.x)))),1);
+     COLOR = vec4(UV.x, ((3.000000f+10.000000f)*cos(8.000000f)), (UV.y+cos(1.000000f)),1);
 }
