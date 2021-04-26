@@ -7,12 +7,14 @@
 #include <thread>
 #include "../headers/Stats.h"
 
+
 using namespace std;
 enum FitnessFunction
 {
     NumVariable,
     Shannon,
-    Symmetry
+    Symmetry,
+    Benford
 };
 
 struct ScoreComparison
@@ -44,6 +46,7 @@ public:
     float shannonScore(Shader* shader);
     float symScore(Shader* shader);
     float bellCurveScore(Shader* shader);
+    float benfordScore(Shader* shader);
     vector<vector<float>> getResponse(Shader* shader, int timeStep);
     int getSim(Shader* shader, int timeStep);
     void assignScoreGroup(int start, int end, FitnessFunction fit);

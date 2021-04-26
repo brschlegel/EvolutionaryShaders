@@ -230,8 +230,9 @@ void Tree::naiveMutate()
     for (int i = 0; i < numMutations; i++)
     {
          int whichMutation;
-        if(getNumLeavesR(root).size() < 20)
+        if(getLeavesR(root).size() < 20)
         {
+            
             whichMutation = rand() % 8;
         }
         else
@@ -272,6 +273,7 @@ void Tree::naiveMutate()
 
         case 6:
         case 7:
+            //This grows the tree, meaning we need to cap when this occurs
             //Change operator to variable
             mutateLeafToOp();
             break;

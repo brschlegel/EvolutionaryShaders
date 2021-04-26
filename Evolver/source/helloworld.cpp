@@ -30,7 +30,7 @@ int main()
     cout << "Number of threads";
     cin >> numThreads;
    
-
+    FitnessFunction fit = FitnessFunction::NumVariable;
     Writer w;
     auto startTime = std::chrono::steady_clock::now();
     World world = World(numRegions,numSurvivors,populationSize,numGenerations);
@@ -40,15 +40,15 @@ int main()
     GlobalVars::getInstance()->numThreads = numThreads;
     GlobalVars::getInstance()->init();
 
-    vector<Shader*> shaders = world.evolve(FitnessFunction::NumVariable);
+    vector<Shader*> shaders = world.evolve(fit);
     cout<<"evolution done" <<endl;  
     for(Shader* s : shaders)
     {
-        world.assignScore(s, FitnessFunction::NumVariable);
+        world.assignScore(s, fit);
         cout << "score: " << s->score <<endl;
     }
     
-    w.write("shannon", shaders);
+    w.write("complexity", shaders);
     GlobalVars::getInstance()->timeCsv.write();
     GlobalVars::getInstance()->scoresCsv.write();
     GlobalVars::getInstance()->survivorScoresCsv.write();

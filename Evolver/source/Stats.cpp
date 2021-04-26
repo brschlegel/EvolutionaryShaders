@@ -66,5 +66,5 @@ void Histogram::addValue(float value)
 
 float Normal::pdf(float x,float mean, float stdDev)
 {
-    return (1 / (stdDev*sqrtf(2 * 3.14159f)) * powf( 2.71828f, (-(x-mean) * (x-mean))/(2.0f * stdDev * stdDev) ));
+    return (1 / (stdDev* sqrtf(2 * 3.14159f)) * powf( 2.71828f, (-(x-mean) * (x-mean))/(2.0f * stdDev * stdDev) ));
 }

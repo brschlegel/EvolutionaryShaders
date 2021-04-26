@@ -8,6 +8,7 @@
         "iosfwd": "cpp",
         "thread": "cpp",
         "type_traits": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "cmath": "cpp"
     }
 }

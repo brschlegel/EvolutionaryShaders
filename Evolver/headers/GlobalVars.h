@@ -6,6 +6,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include "../headers/Csv.h"
+#include <math.h>
 using namespace std;
 enum Operators
 {
@@ -46,6 +47,9 @@ public:
     int populationSize; 
     int numSurvivors;
     int numGenerations;
+    float benford[9];
+    float benfordP;
+    float bMax;
 
     Csv scoresCsv;
     Csv timeCsv;

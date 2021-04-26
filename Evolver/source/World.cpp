@@ -22,6 +22,9 @@ void World::assignScore(Shader *shader, FitnessFunction fit)
     case FitnessFunction::Symmetry:
             num += symScore(shader);
         break;
+    case FitnessFunction::Benford:
+        num += benfordScore(shader);
+        break;
     }
     GlobalVars::getInstance()->scoresCsv.addValue(num);
     shader->score = num;
@@ -337,6 +340,7 @@ int World::getSim(Shader* shader, int timeStep)
 float World::bellCurveScore(Shader* shader)
 {
     int numRegions = GlobalVars::getInstance()->numRegions;
+    float total = 0;
     for(int timeStep = 0; timeStep < GlobalVars::getInstance()->numTimeStep; timeStep++)
     {
         vector<vector<float>> response = getResponse(shader, timeStep);
@@ -362,17 +366,28 @@ float World::bellCurveScore(Shader* shader)
                 sqrSum += response[i][j] * response[i][j];
             }
         }
-
+        //masking threshold
+        //if sum isnt greater than this, just give it a score of zero
+        if(sum < 0.0001f)
+        {
+            continue;
+        }
         float mean = sqrSum / sum;
+       
         float stdSum = 0;
         for(int i = 0; i < response.size(); i++)
         {
             for(int j = 0; j < response[i].size(); j++)
             {
-               stdSum += response[i][j] - powf(response[i][j] - mean, 2);
+               stdSum += response[i][j] * powf(response[i][j] - mean, 2);
             }
         }
         float stdDev = sqrtf(stdSum / sum);
+        //another masking feature
+        if(stdDev == 0)
+        {
+            continue;
+        }
         Histogram h = Histogram(mean, stdDev/100.0f, min, max);
         for(int i = 0; i < response.size(); i++)
         {
@@ -381,15 +396,16 @@ float World::bellCurveScore(Shader* shader)
                h.addValue(response[i][j]);
             }
         }
-        float sum = 0;
+        float finalSum = 0;
         for(int i = 0; i < h.bins.size(); i++)
         {
             float p = h.bins[i].entries.size() / h.count;
             float q = Normal::pdf(h.bins[i].lower + h.bins[i].upper / 2, 0, stdDev);
-            sum += p * log10f(p/q);
+            finalSum += p * log10f(p/q);
         }
-        return 1000 * sum;
+        total +=  1000 * finalSum;
     }
+    return total;
 }
 
 vector<vector<float>> World::getResponse(Shader* shader, int timeStep)
@@ -411,4 +427,42 @@ vector<vector<float>> World::getResponse(Shader* shader, int timeStep)
     }
 
     return response;
+}
+
+float World::benfordScore(Shader* shader)
+{
+    int numRegions = GlobalVars::getInstance()->numRegions;
+    float score = 0;
+    float benford[9] = {.301,.176,.125,.097,.079,.067,.058,.051,.046};
+    float benfordP = 3;
+    float bMax = 0;
+    bMax += powf((1 - benford[0]), benfordP);
+    for(int i = 1; i < 9;i++)
+    {
+        bMax += powf( benford[i], benfordP);
+    }
+
+    for(int timeStep = 0; timeStep < GlobalVars::getInstance()->numTimeStep; timeStep++)
+    {
+        float dif = 0;
+        int histogram[9];
+        for(int i = 0; i < 9; i++)
+        {
+            histogram[i] = 0;
+        }
+        for(int i = 0; i < numRegions; i++ )
+        {
+            for(int j = 0; j < numRegions; j++)
+            {
+                int index = (int)(shader->colorsByTimeStep[timeStep][i][j].calculateGreyScale() * 9);
+                histogram[index]++;
+            }
+        }
+        for(int i = 0; i < 9;i++)
+        {
+            dif += powf((histogram[i]/ (numRegions * numRegions)) - benford[i],benfordP);
+        }
+        score += (bMax - dif) / bMax;
+    }
+    return score;
 }

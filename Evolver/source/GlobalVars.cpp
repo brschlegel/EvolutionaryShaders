@@ -45,7 +45,23 @@ GlobalVars::GlobalVars()
     numTimeStep = 20;
     numRegions = 20;
     simThreshold = .07;
-   
+    benfordP = 3;
+    //= {.301,.176,.125,.097,.079,.067,.058,.051,.046};
+    benford[0] = .301f;
+    benford[1] = .176f;
+    benford[2] = .125f;
+    benford[3] = .097f;
+    benford[4] = .079f;
+    benford[5] = .067f;
+    benford[6] = .058f;
+    benford[7] = .051f;
+    benford[8] = .046f;
+
+    bMax += powf((1 - benford[0]), benfordP);
+    for(int i = 1; i < 9;i++)
+    {
+        bMax += powf( benford[i], benfordP);
+    }
 
     variables.push_back("UV.x");
     variables.push_back("UV.y");

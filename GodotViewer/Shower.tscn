@@ -1,11 +1,22 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
+[ext_resource path="res://OptionButton.gd" type="Script" id=1]
 [ext_resource path="res://Shower.gd" type="Script" id=11]
 
 [node name="Shower" type="Node2D"]
 script = ExtResource( 11 )
 num = 50
 numRows = 5
-string = "sym"
+string = "shannon"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="OptionButton" type="OptionButton" parent="."]
+margin_right = 84.0
+margin_bottom = 20.0
+text = "Measure"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="item_selected" from="OptionButton" to="." method="_on_OptionButton_item_selected"]

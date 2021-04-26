@@ -1,4 +1,13 @@
 shader_type canvas_item;
+float impulse( float x, float k )
+{
+float h = k*x;
+return h*exp(1.0-h);
+}
+float parabola( float x, float k )
+{
+return pow( 4.0*x*(1.0-x), k );
+}
 void fragment(){
-     COLOR = vec4((2.000000f-(2.000000f*cos((((7.000000f-(1.000000f/((UV.y*sin(((9.000000f+sin(7.000000f))+UV.y)))-((TIME*UV.y)+sin((((((3.000000f*sin(TIME))*cos(UV.y))+cos(4f))+((2f*cos(2.000000f))-4.500000f))+sin(UV.x)))))))+(UV.x*sin((10.000000f*3.000000f))))+sin(TIME))))), (((10.000000f/(1.000000f+TIME))/8f)*sin(((2.000000f*5.000000f)*(TIME-4f)))), TIME,1);
+     COLOR = vec4((impulse(UV.y,(((((7f-(UV.y*cos((parabola(((1.500000f*cos(((UV.y-(((UV.y*(parabola((impulse(TIME,(5f*cos(TIME)))),((UV.y-((((parabola((TIME+sin((UV.x*TIME))),UV.y))*cos((parabola(UV.x,((impulse((TIME+sin(2.000000f)),UV.y))+UV.x)))))-UV.x)-UV.y))*sin(UV.y)))))-((8.000000f+(impulse((parabola((9.000000f-UV.y),(TIME+sin(2.000000f)))),UV.y)))*sin((parabola(UV.x,6f)))))-UV.y))+sin(2f))))+cos((UV.x-4.500000f))),((impulse(((((TIME*sin(6.000000f))*cos((5.000000f-(2.000000f*3.500000f))))*2f)+cos(((parabola(UV.y,(2f*sin(((((((UV.x-((((UV.y-(parabola(UV.y,(TIME+UV.x))))+cos((impulse(5f,(TIME*sin(((impulse((UV.x+cos(((parabola((impulse(TIME,(TIME*cos(TIME)))),((UV.y-((((parabola((5f+sin((UV.x*TIME))),(2f+cos((6f/1f)))))+cos((parabola(UV.x,((impulse(UV.x,UV.y))+UV.x)))))-UV.x)-UV.y))*sin(UV.y))))+sin(((parabola((impulse((UV.x+cos(((parabola((impulse(TIME,(5f*cos(TIME)))),(((UV.x+cos(2f))-((((parabola((5f+sin((((TIME+sin(TIME))+cos(((TIME/(7f-9f))+sin(UV.y))))*TIME))),(2f*sin((6f/1f)))))*cos((parabola(UV.y,((impulse(UV.x,UV.y))+UV.x)))))-UV.x)-UV.y))*sin((6f/1f)))))+sin((UV.y/0.500000f))))),UV.y)),(TIME*sin(TIME))))/1f))))),8.000000f))+UV.x)))))))*sin(TIME))*cos((7f-((((UV.y/9f)-TIME)*sin(TIME))*cos((parabola(((1.500000f*cos(((UV.y-(((2.000000f*UV.x)-((8.000000f-(impulse(((9.000000f-UV.y)+sin((TIME+sin(2.000000f)))),UV.y)))*sin((UV.x*cos(6f)))))-UV.y))+sin(2f))))+cos((UV.x-2.250000f))),((impulse(((((TIME*sin(3.000000f))*cos((5.000000f-(2.000000f*3.500000f))))*2f)+cos(((parabola(UV.y,(2f*sin(((((((UV.x-((((UV.y/(parabola(UV.y,(TIME+6.000000f))))+cos((impulse(5f,(TIME*sin(((impulse((UV.x+cos(((parabola((impulse(TIME,(UV.y*cos(TIME)))),((((parabola(UV.y,UV.y))/UV.y)-((((parabola((5f+cos((UV.x*TIME))),(2f*sin((6f/1f)))))+cos((parabola(UV.x,((impulse(UV.x,UV.y))+UV.x)))))-UV.x)-UV.y))*sin(UV.y))))+sin(((parabola((impulse((UV.x+cos(((parabola((impulse(TIME,(5f*cos(TIME)))),(((UV.x+cos(2f))-((TIME-UV.x)-UV.y))*sin((0.500000f/1f)))))+sin((UV.y/0.500000f))))),UV.y)),TIME))/1f))))),UV.y))+UV.x)))))))*sin(1.000000f))*cos(2.000000f)))*sin(UV.y))-UV.x)+(0.250000f*8.000000f))-TIME)/1f)))))+sin(5.000000f)))),(4.000000f/9f)))+UV.x)))))))))*sin(UV.y))-UV.x)*sin((0.250000f*8.000000f)))*cos(TIME))/1f)))))+sin(10.000000f)))),(4.000000f/9f)))+UV.x))))))+cos((impulse(UV.y,(5f*cos(TIME))))))+cos(2f))-8.000000f)+sin(UV.y)))), 2.000000f, ((7.000000f/10.000000f)*cos(10.000000f)),1);
 }

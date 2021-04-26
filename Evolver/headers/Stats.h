@@ -1,5 +1,8 @@
+#pragma once
+
 #include <vector>
 #include <algorithm>
+#include <math.h>
 using namespace std;
 class Bin;
 class Bin{
@@ -32,7 +35,8 @@ public:
 
 };
 
-static class Normal{
+class Normal{
 public:
     static float pdf(float x, float mean, float stdDev);
+
 };
