@@ -40,5 +40,8 @@ void Csv::addValue(float value)
     {
         currentRow++;
     }
+    if(currentRow < entries.size())
+    {
     entries[currentRow].push_back(value);
+    }
 }

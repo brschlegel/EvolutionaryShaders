@@ -9,7 +9,7 @@ extends OptionButton
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_item("Shannon")
-	add_item("Bell")
+	add_item("Benford")
 	add_item("Reflectional")
 	pass # Replace with function body.
 

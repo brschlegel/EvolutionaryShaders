@@ -96,10 +96,10 @@ GlobalVars::GlobalVars()
 
 void GlobalVars::init()
 {
-    scoresCsv = Csv(numGenerations +1 , populationSize, "scores");
-    timeDiffCsv = Csv(numGenerations + 1, populationSize, "timeDiff");
-    timeCsv = Csv(numGenerations+1, 1, "times");
-    survivorScoresCsv = Csv(numGenerations+ 1, numSurvivors, "survivorScores");
+    scoresCsv = Csv(numGenerations +2 , populationSize, "scores");
+    timeDiffCsv = Csv(numGenerations + 2, populationSize, "timeDiff");
+    timeCsv = Csv(numGenerations+2, 1, "times");
+    survivorScoresCsv = Csv(numGenerations+ 2, numSurvivors, "survivorScores");
     
 }
 

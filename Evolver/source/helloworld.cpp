@@ -30,7 +30,7 @@ int main()
     cout << "Number of threads";
     cin >> numThreads;
    
-    FitnessFunction fit = FitnessFunction::NumVariable;
+    FitnessFunction fit = FitnessFunction::Symmetry;
     Writer w;
     auto startTime = std::chrono::steady_clock::now();
     World world = World(numRegions,numSurvivors,populationSize,numGenerations);
@@ -48,7 +48,7 @@ int main()
         cout << "score: " << s->score <<endl;
     }
     
-    w.write("complexity", shaders);
+    w.write("sym", shaders);
     GlobalVars::getInstance()->timeCsv.write();
     GlobalVars::getInstance()->scoresCsv.write();
     GlobalVars::getInstance()->survivorScoresCsv.write();

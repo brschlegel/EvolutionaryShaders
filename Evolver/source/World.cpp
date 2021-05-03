@@ -20,7 +20,7 @@ void World::assignScore(Shader *shader, FitnessFunction fit)
             num += shannonScore(shader);
         break;
     case FitnessFunction::Symmetry:
-            num += symScore(shader);
+            num += symScore(shader) / 100;
         break;
     case FitnessFunction::Benford:
         num += benfordScore(shader);
@@ -49,7 +49,7 @@ vector<Shader *> World::getSurvivors()
 
 void World::createNewGeneration()
 {
-    int numPerSurvivor = populationSize / numSurvivors;
+    int numPerSurvivor = (populationSize / numSurvivors) - 1;
     vector<Shader *> newGen;
     crossover();
     for (Shader *s : shaders)
@@ -89,7 +89,9 @@ vector<Shader *> World::evolve(FitnessFunction fit)
            threads[j].join();
         }
         shaders = getSurvivors();
+        vector<Shader*> copy = vector<Shader*>(shaders);
         createNewGeneration();
+        shaders.insert(shaders.end(), copy.begin(), copy.end());
         float time = getElapsedSeconds();
         GlobalVars::getInstance()->timeCsv.addValue(time);
         cout << "generation " << i << " done     " << time << endl;
@@ -123,7 +125,7 @@ vector<Shader *> World::evolve(FitnessFunction fit)
 // I wanna make sure I do things right here, as well as try to make it effecient, hence all the naming and extra variables
 void World::crossover()
 {
-    vector<Shader *> crossover;
+    vector<Shader*> crossover;
     int size = shaders.size();
     for (int i = 0; i < size; i++)
     {

@@ -49,7 +49,7 @@ void Tree::BuildRandTree(Node *node, int depth)
         }
         else
         {
-            node->left = new Node(to_string((rand() % GlobalVars::getInstance()->randomNumMax) + GlobalVars::getInstance()->randomNumMin));
+            node->left = new Node(to_string((rand() % (GlobalVars::getInstance()->randomNumMax * 100))/100 + GlobalVars::getInstance()->randomNumMin ));
         }
     }
 
@@ -301,7 +301,7 @@ void Tree::mutateLeafToOp()
     Node *randLeaf = leaves[rand() % leaves.size()];
     Operators op = GlobalVars::getInstance()->getRandomOperator();
     randLeaf->info = GlobalVars::getInstance()->getStringOfOperator(op);
-    float left = (rand() % GlobalVars::getInstance()->randomNumMax) + GlobalVars::getInstance()->randomNumMin;
+    float left = (rand() % (GlobalVars::getInstance()->randomNumMax * 100))/100 + GlobalVars::getInstance()->randomNumMin ;
     float right = (rand() % GlobalVars::getInstance()->randomNumMax) + GlobalVars::getInstance()->randomNumMin;
     randLeaf->left = new Node(to_string(left));
     randLeaf->right = new Node(to_string(right));
@@ -369,7 +369,7 @@ void Tree::mutateVarToNum()
         return;
 
     Node *randLeaf = leaves[rand() % leaves.size()];
-    float num = (rand() % GlobalVars::getInstance()->randomNumMax) + GlobalVars::getInstance()->randomNumMin;
+    float num = (rand() % (GlobalVars::getInstance()->randomNumMax * 100) /100) + GlobalVars::getInstance()->randomNumMin;
     randLeaf->info = to_string(num);
 }
 
